@@ -1,7 +1,7 @@
 #+TITLE: Emacs's Native Snippets
 #+AUTHOR: Yilkal Argaw
 
-While perusing through Emacs' built in features through "C-h p" documentation I found out there were several template and snippet tools built into emacs. Three of them to be exact tempo, skeletons and expand. I've never actually dived into many of these features. After reading about them and experimenting with them deeper I have noticed how powerful they are. Aside from lack of documentation most of them are not used widely because they lack a good collection of snippets for various modes. This repo aims to give a good documentation and a set of snippets that could easily be copied by users to help them get started on using Emacs' built in code templating and snippet tools.
+While perusing through Emacs' built in features through "C-h p" documentation I found out there were several template and snippet tools built into emacs. Three of them to be exact tempo, skeletons and expand. I've never actually dived into many of these features. After reading about them and experimenting with them deeper I have noticed how powerful they are. Aside from lack of documentation most of them are not widely used because they lack a good collection of snippets for various modes. This repo aims to give a good documentation and a set of snippets that could easily be copied by users to help them get started on using Emacs' built in code templating and snippet tools.
 
 * tempo
 
