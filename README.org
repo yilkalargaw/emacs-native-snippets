@@ -40,7 +40,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+end_src
 
-** tempo c  && c++ snippets
+** c && c++ snippets using tempo
 
 sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
@@ -244,6 +244,8 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 										   (tempo-use-tag-list 'c++-tempo-tags))))
 #+end_src
 
+** Emacs-lisp snippets using tempo
+
 #+begin_src emacs-lisp
 
 
@@ -300,7 +302,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 														(tempo-use-tag-list 'elisp-tempo-tags))))
 #+end_src
 
-** org-mode tempo snippets
+** org-mode snippets using tempo
 
 #+begin_src emacs-lisp
 
@@ -338,7 +340,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+end_src
 
-** ruby tempo snippets
+** ruby snippets using tempo
 
 #+begin_src emacs-lisp
 
@@ -422,7 +424,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+end_src
 
-** python-mode tempo snippets
+** python snippets using tempo
 
 #+begin_src emacs-lisp
 
@@ -591,6 +593,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 #+end_src
 
-** Skeleton
+
+* Skeleton
 
 #+TODO
