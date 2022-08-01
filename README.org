@@ -468,8 +468,10 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                        "Insert an if else clause"
                        'python-tempo-tags)
 
-(add-hook 'python-mode-hook (lambda () (progn (set-tempo)
-                                              (tempo-use-tag-list 'python-tempo-tags))))
+(add-hook 'python-mode-hook
+          (lambda () (progn
+                       (set-tempo)
+                       (tempo-use-tag-list 'python-tempo-tags))))
 
 #+end_src
 
