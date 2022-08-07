@@ -484,30 +484,47 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 (defmacro html-tempo-paired-tag-single-line (var)
   (list 'tempo-define-template var
-        (list 'quote (list var "> " '> 'p (concat " </" var ">") '>)) var (concat "insert html " var " tag") (list 'quote 'html-tempo-tags)))
+        (list 'quote (list var "> " '> 'p (concat " </" var ">") '>))
+        var
+        (concat "insert html " var " tag")
+        (list 'quote 'html-tempo-tags)))
 
 (seq-do (lambda (x)
           "expand macro"
           (eval (list 'html-tempo-paired-tag-single-line x)))
-        '("li" "th" "td" "caption" "p" "b" "bdi" "bdo" "title" "button"
-          "cite" "data" "del" "summary" "dfn" "em" "figcaption"
-          "h1" "h2" "h3" "h4" "h5" "h6" "i" "iframe" "kbd" "label"
-          "legend" "mark" "meter" "a" "object" "option" "progress" "q"
-          "s" "samp" "small" "span" "strong" "sub" "summary" "sup" "time"))
+        '("a" "b" "bdi" "bdo"
+          "button" "caption" "cite" "data"
+          "del" "dfn" "em" "figcaption"
+          "h1" "h2" "h3" "h4"
+          "h5" "h6" "i" "iframe"
+          "kbd" "li" "label" "legend"
+          "mark" "meter" "object" "option"
+          "p" "progress" "q" "summary"
+          "s" "samp" "small" "span"
+          "strong" "sub" "summary" "sup"
+          "th" "td" "title" "time"))
 
-(defmacro html-tempo-paired-tag-ml (var)
+(defmacro html-tempo-paired-tag-multi-line (var)
   (list 'tempo-define-template var
-        (list 'quote (list var ">" 'n> 'p 'n> (concat "</" var ">") '>)) var (concat "insert html " var " tag") (list 'quote 'html-tempo-tags)))
+        (list 'quote (list var ">" 'n> 'p 'n> (concat "</" var ">") '>))
+        var
+        (concat "insert html " var " tag")
+        (list 'quote 'html-tempo-tags)))
 
 (seq-do (lambda (x)
           "expand macro"
-          (eval (list 'html-tempo-paired-tag-ml x)))
-        '("table" "address" "ol" "ul" "thead" "tbody" "tfoot" "map" "article"
-          "tr" "colgroup" "aside" "body" "head" "blockquote" "canvas" "code"
-          "datalist" "dl" "details" "dialogue" "div" "fieldset" "figure"
-          "footer" "form" "header" "main" "script" "noscript" "nav" "optgroup"
-          "pre" "section" "select" "audio" "style" "svg" "template"
-          "textarea" "video"))
+          (eval (list 'html-tempo-paired-tag-multi-line x)))
+        '("address" "article" "aside" "audio"
+          "body" "blockquote" "colgroup" "canvas"
+          "code" "datalist" "dl" "details"
+          "dialogue" "div" "fieldset" "figure"
+          "footer" "form" "head" "header"
+          "map" "main" "noscript" "nav"
+          "ol" "optgroup" "pre" "script"
+          "section" "select" "style" "svg"
+          "table" "thead" "tbody" "tfoot"
+          "tr" "template" "textarea" "ul"
+          "video"))
 
 
 (tempo-define-template "image-item"
