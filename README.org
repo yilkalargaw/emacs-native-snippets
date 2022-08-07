@@ -681,7 +681,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 #+end_src
 
-** html-snippets using expand
+** html snippets using expand
 
 #+begin_src emacs-lisp
 
