@@ -561,6 +561,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+end_src
 
+
 * expand
 
 Expand is a package that extends the functionality of abbrev to enable code templating functionality. It uses a similar definition to abbrevs with an added list to indicate stops inside the template. It has default keys "C-x a n" and "C-x a p" for moving forward and backward within stops
@@ -676,6 +677,60 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 (add-hook 'org-mode-hook
           (lambda ()
             (expand-add-abbrevs org-mode-abbrev-table org-expand-list)
+            (abbrev-mode 1)))
+
+#+end_src
+
+** html-snippets using expand
+
+#+begin_src emacs-lisp
+
+(defmacro html-expand-snippet-single-line (var)
+  (list 'quote (list var (concat "<" var ">  </" var ">") (list (+ 4 (length var)) (+ 10 (length var))))))
+
+(defmacro html-expand-snippet-multi-line (var)
+  (list 'quote (list var (concat "<" var ">\n\n</" var ">") (list (+ 4 (length var)) (+ 10 (length var))))))
+
+(defconst html-expand-list
+  (seq-concatenate 'list
+                   (seq-map (lambda (x)
+                              "expand macro"
+                              (eval (list 'html-expand-snippet-single-line x)))
+                            '("a" "b" "bdi" "bdo"
+                              "button" "caption" "cite" "data"
+                              "del" "dfn" "em" "figcaption"
+                              "h1" "h2" "h3" "h4"
+                              "h5" "h6" "i" "iframe"
+                              "kbd" "li" "label" "legend"
+                              "mark" "meter" "object" "option"
+                              "p" "progress" "q" "summary"
+                              "s" "samp" "small" "span"
+                              "strong" "sub" "summary" "sup"
+                              "th" "td" "title" "time"))
+
+                   (seq-map (lambda (x)
+                              "expand macro"
+                              (eval (list 'html-expand-snippet-multi-line x)))
+                            '("address" "article" "aside" "audio"
+                              "body" "blockquote" "colgroup" "canvas"
+                              "code" "datalist" "dl" "details"
+                              "dialogue" "div" "fieldset" "figure"
+                              "footer" "form" "head" "header"
+                              "map" "main" "noscript" "nav"
+                              "ol" "optgroup" "pre" "script"
+                              "section" "select" "style" "svg"
+                              "table" "thead" "tbody" "tfoot"
+                              "tr" "template" "textarea" "ul"
+                              "video"))))
+
+(add-hook 'html-mode-hook
+          (lambda ()
+            (expand-add-abbrevs html-mode-abbrev-table html-expand-list)
+            (abbrev-mode 1)))
+
+(add-hook 'mhtml-mode-hook
+          (lambda ()
+            (expand-add-abbrevs html-mode-abbrev-table html-expand-list)
             (abbrev-mode 1)))
 
 #+end_src
