@@ -13,7 +13,6 @@ certain kind of documents. Most of what I learned about this package from the fo
 The settings in the "general settings" part are used to override "space" so that tempo completion could take place after writing a valid tag and  define a keymap for the package.
 Movement keys are set to "C-c t f", and "C-c t b" for moving forward and moving backward respectively  inside the stops in the snippet.
 
-
 ** general settings needed for snippets
 
 sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
@@ -306,37 +305,39 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+begin_src emacs-lisp
 
+(add-hook 'org-mode-hook (lambda () (progn 
 ;;; org-mode templates
-(defvar org-tempo-tags nil)
+									  (defvar org-tempo-tags nil)
 
-(tempo-define-template "src_block"
-                       '("#+begin_src "> p n> p n> "#+end_src")
-                       "src"
-                       "Insert a source block"
-                       'org-tempo-tags)
+									  (tempo-define-template "src_block"
+															 '("#+begin_src "> p n> p n> "#+end_src")
+															 "src"
+															 "Insert a source block"
+															 'org-tempo-tags)
 
-(tempo-define-template "title"
-                       '("+TITLE: "> p)
-                       "ti"
-                       "Insert a document title"
-                       'org-tempo-tags)
+									  (tempo-define-template "title"
+															 '("+TITLE: "> p)
+															 "ti"
+															 "Insert a document title"
+															 'org-tempo-tags)
 
-(tempo-define-template "author"
-                       '("+AUTHOR: "> p)
-                       "au"
-                       "Insert a author name"
-                       'org-tempo-tags)
+									  (tempo-define-template "author"
+															 '("+AUTHOR: "> p)
+															 "au"
+															 "Insert a author name"
+															 'org-tempo-tags)
 
-(tempo-define-template "src_block"
-                       '("+begin_src "> p n> p n> "#+end_src" n>)
-                       "src"
-                       "Insert a defun expression"
-                       'org-tempo-tags)
+									  (tempo-define-template "src_block"
+															 '("+begin_src "> p n> p n> "#+end_src" n>)
+															 "src"
+															 "Insert a defun expression"
+															 'org-tempo-tags)
 
 
-(add-hook 'org-mode-hook (lambda () (progn (set-tempo)
-                                           (tempo-use-tag-list 'org-tempo-tags)
-                                           (setq tempo-match-finder "\\#\\([^\b]+\\)\\="))))
+									  (set-tempo)
+									  (defvar html-tempo-tags nil)
+                                      (tempo-use-tag-list 'org-tempo-tags)
+                                      (setq tempo-match-finder "\\#\\([^\b]+\\)\\="))))
 
 #+end_src
 
@@ -344,83 +345,85 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+begin_src emacs-lisp
 
-;;; ruby-mode tempolates
-(defvar ruby-tempo-tags nil)
+;;; ruby-mode templates
 
-(tempo-define-template "ruby-class"
-                       '("class " > p n> p n "end" >)
-                       "cls"
-                       "Insert a class"
-                       'ruby-tempo-tags)
+(add-hook 'ruby-mode-hook (lambda () (progn 
+									   (defvar ruby-tempo-tags nil)
 
-(tempo-define-template "ruby-module"
-                       '("module " > p n> p n "end" >)
-                       "mod"
-                       "Insert a class"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-class"
+															  '("class " > p n> p n "end" >)
+															  "cls"
+															  "Insert a class"
+															  'ruby-tempo-tags)
 
-(tempo-define-template "ruby-def"
-                       '("def " > p "(" p ")" n> p n "end" >)
-                       "def"
-                       "Insert a module"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-module"
+															  '("module " > p n> p n "end" >)
+															  "mod"
+															  "Insert a class"
+															  'ruby-tempo-tags)
 
-(tempo-define-template "ruby-intialize"
-                       '("def intialize(" p ")" > n> p n> "end" >)
-                       "init"
-                       "Insert a constructor"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-def"
+															  '("def " > p "(" p ")" n> p n "end" >)
+															  "def"
+															  "Insert a module"
+															  'ruby-tempo-tags)
 
-(tempo-define-template "ruby-include"
-                       '("include " > p >)
-                       "incl"
-                       "include a module"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-intialize"
+															  '("def intialize(" p ")" > n> p n> "end" >)
+															  "init"
+															  "Insert a constructor"
+															  'ruby-tempo-tags)
 
-(tempo-define-template "ruby-require"
-                       '("require \"" > p "\"" >)
-                       "req"
-                       "require"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-include"
+															  '("include " > p >)
+															  "incl"
+															  "include a module"
+															  'ruby-tempo-tags)
 
-(tempo-define-template "ruby-if"
-                       '("if " > p n> p n> "end" >)
-                       "if"
-                       "Insert an if clause"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-require"
+															  '("require \"" > p "\"" >)
+															  "req"
+															  "require"
+															  'ruby-tempo-tags)
 
-(tempo-define-template "ruby-ifelse"
-                       '("if " > p n> "else" n> p n> "end" >)
-                       "ifel"
-                       "Insert an if else clause"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-if"
+															  '("if " > p n> p n> "end" >)
+															  "if"
+															  "Insert an if clause"
+															  'ruby-tempo-tags)
 
-(tempo-define-template "ruby-unless"
-                       '("unless "> p n> p n> "end" >)
-                       "unless"
-                       "Insert a unless clause"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-ifelse"
+															  '("if " > p n> "else" n> p n> "end" >)
+															  "ifel"
+															  "Insert an if else clause"
+															  'ruby-tempo-tags)
 
-(tempo-define-template "ruby-until"
-                       '("until " > p n> p n> "end" >)
-                       "until"
-                       "Insert an until loop"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-unless"
+															  '("unless "> p n> p n> "end" >)
+															  "unless"
+															  "Insert a unless clause"
+															  'ruby-tempo-tags)
 
-(tempo-define-template "ruby-when"
-                       '(> "when "> p n> p n> "end" >)
-                       "when"
-                       "Insert a when clause"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-until"
+															  '("until " > p n> p n> "end" >)
+															  "until"
+															  "Insert an until loop"
+															  'ruby-tempo-tags)
 
-(tempo-define-template "ruby-while"
-                       '("while "> p n> p n> "end" >)
-                       "while"
-                       "Insert a while loop"
-                       'ruby-tempo-tags)
+									   (tempo-define-template "ruby-when"
+															  '(> "when "> p n> p n> "end" >)
+															  "when"
+															  "Insert a when clause"
+															  'ruby-tempo-tags)
 
-(add-hook 'ruby-mode-hook (lambda () (progn (set-tempo)
-                                            (tempo-use-tag-list 'ruby-tempo-tags))))
+									   (tempo-define-template "ruby-while"
+															  '("while "> p n> p n> "end" >)
+															  "while"
+															  "Insert a while loop"
+															  'ruby-tempo-tags)
+
+									   (set-tempo)
+                                       (tempo-use-tag-list 'ruby-tempo-tags))))
 
 #+end_src
 
@@ -428,48 +431,49 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+begin_src emacs-lisp
 
-;;; python-mode tempolates
-(defvar python-tempo-tags nil)
-
-(tempo-define-template "python-class"
-                       '("class " > p ":"n>)
-                       "cls"
-                       "Insert a class"
-                       'python-tempo-tags)
-
-(tempo-define-template "python-def"
-                       '("def " > p "(" p "):" n> p n>)
-                       "def"
-                       "define a function"
-                       'python-tempo-tags)
-
-(tempo-define-template "import"
-                       '("import " p >)
-                       "imp"
-                       "python import"
-                       'python-tempo-tags)
-
-
-(tempo-define-template "python-include"
-                       '("from " > p " import " p>)
-                       "from"
-                       "from tag"
-                       'python-tempo-tags)
-
-(tempo-define-template "python-if"
-                       '("if " > p ":"n> p >)
-                       "if"
-                       "Insert an if clause"
-                       'python-tempo-tags)
-
-(tempo-define-template "python-ifelse"
-                       '("if " > p ":"n> p "else:" n> p >)
-                       "ife"
-                       "Insert an if else clause"
-                       'python-tempo-tags)
-
 (add-hook 'python-mode-hook
           (lambda () (progn
+
+;;; python-mode templates
+					   (defvar python-tempo-tags nil)
+
+					   (tempo-define-template "python-class"
+											  '("class " > p ":"n>)
+											  "cls"
+											  "Insert a class"
+											  'python-tempo-tags)
+
+					   (tempo-define-template "python-def"
+											  '("def " > p "(" p "):" n> p n>)
+											  "def"
+											  "define a function"
+											  'python-tempo-tags)
+
+					   (tempo-define-template "import"
+											  '("import " p >)
+											  "imp"
+											  "python import"
+											  'python-tempo-tags)
+
+
+					   (tempo-define-template "python-include"
+											  '("from " > p " import " p>)
+											  "from"
+											  "from tag"
+											  'python-tempo-tags)
+
+					   (tempo-define-template "python-if"
+											  '("if " > p ":"n> p >)
+											  "if"
+											  "Insert an if clause"
+											  'python-tempo-tags)
+
+					   (tempo-define-template "python-ifelse"
+											  '("if " > p ":"n> p "else:" n> p >)
+											  "ife"
+											  "Insert an if else clause"
+											  'python-tempo-tags)
+
                        (set-tempo)
                        (tempo-use-tag-list 'python-tempo-tags))))
 
@@ -479,85 +483,81 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+begin_src emacs-lisp
 
-;;; html tempo tempolates
-(defvar html-tempo-tags nil)
+;;; html tempo templates
+(add-hook 'html-mode-hook (lambda () (progn 
+									   (defvar html-tempo-tags nil)
 
-(defmacro html-tempo-paired-tag-single-line (var)
-  (list 'tempo-define-template var
-        (list 'quote (list var "> " '> 'p (concat " </" var ">") '>))
-        var
-        (concat "insert html " var " tag")
-        (list 'quote 'html-tempo-tags)))
+									   (defmacro html-tempo-paired-tag-single-line (var)
+										 (list 'tempo-define-template var
+											   (list 'quote (list var "> " '> 'p (concat " </" var ">") '>))
+											   var
+											   (concat "insert html " var " tag")
+											   (list 'quote 'html-tempo-tags)))
 
-(seq-do (lambda (x)
-          "expand macro"
-          (eval (list 'html-tempo-paired-tag-single-line x)))
-        '("a" "b" "bdi" "bdo"
-          "button" "caption" "cite" "data"
-          "del" "dfn" "em" "figcaption"
-          "h1" "h2" "h3" "h4"
-          "h5" "h6" "i" "iframe"
-          "kbd" "li" "label" "legend"
-          "mark" "meter" "object" "option"
-          "p" "progress" "q" "summary"
-          "s" "samp" "small" "span"
-          "strong" "sub" "summary" "sup"
-          "th" "td" "title" "time"))
+									   (seq-do (lambda (x)
+												 "expand macro"
+												 (eval (list 'html-tempo-paired-tag-single-line x)))
+											   '("a" "b" "bdi" "bdo"
+												 "button" "caption" "cite" "data"
+												 "del" "dfn" "em" "figcaption"
+												 "h1" "h2" "h3" "h4"
+												 "h5" "h6" "i" "iframe"
+												 "kbd" "li" "label" "legend"
+												 "mark" "meter" "object" "option"
+												 "p" "progress" "q" "summary"
+												 "s" "samp" "small" "span"
+												 "strong" "sub" "summary" "sup"
+												 "th" "td" "title" "time"))
 
-(defmacro html-tempo-paired-tag-multi-line (var)
-  (list 'tempo-define-template var
-        (list 'quote (list var ">" 'n> 'p 'n> (concat "</" var ">") '>))
-        var
-        (concat "insert html " var " tag")
-        (list 'quote 'html-tempo-tags)))
+									   (defmacro html-tempo-paired-tag-multi-line (var)
+										 (list 'tempo-define-template var
+											   (list 'quote (list var ">" 'n> 'p 'n> (concat "</" var ">") '>))
+											   var
+											   (concat "insert html " var " tag")
+											   (list 'quote 'html-tempo-tags)))
 
-(seq-do (lambda (x)
-          "expand macro"
-          (eval (list 'html-tempo-paired-tag-multi-line x)))
-        '("address" "article" "aside" "audio"
-          "body" "blockquote" "colgroup" "canvas"
-          "code" "datalist" "dl" "details"
-          "dialogue" "div" "fieldset" "figure"
-          "footer" "form" "head" "header"
-          "map" "main" "noscript" "nav"
-          "ol" "optgroup" "pre" "script"
-          "section" "select" "style" "svg"
-          "table" "thead" "tbody" "tfoot"
-          "tr" "template" "textarea" "ul"
-          "video"))
+									   (seq-do (lambda (x)
+												 "expand macro"
+												 (eval (list 'html-tempo-paired-tag-multi-line x)))
+											   '("address" "article" "aside" "audio"
+												 "body" "blockquote" "colgroup" "canvas"
+												 "code" "datalist" "dl" "details"
+												 "dialogue" "div" "fieldset" "figure"
+												 "footer" "form" "head" "header"
+												 "map" "main" "noscript" "nav"
+												 "ol" "optgroup" "pre" "script"
+												 "section" "select" "style" "svg"
+												 "table" "thead" "tbody" "tfoot"
+												 "tr" "template" "textarea" "ul"
+												 "video"))
 
 
-(tempo-define-template "image-item"
-                       '("img src=\"" > p "\" alt=\"" p ">">)
-                       "img"
-                       "insert html image tag"
-                       'html-tempo-tags)
+									   (tempo-define-template "image-item"
+															  '("img src=\"" > p "\" alt=\"" p ">">)
+															  "img"
+															  "insert html image tag"
+															  'html-tempo-tags)
 
-(tempo-define-template "abbr"
-                       '("abbr title=\"" > p "\">" p "</abbr>">)
-                       "abbr"
-                       "insert html abbr tag"
-                       'html-tempo-tags)
+									   (tempo-define-template "abbr"
+															  '("abbr title=\"" > p "\">" p "</abbr>">)
+															  "abbr"
+															  "insert html abbr tag"
+															  'html-tempo-tags)
 
-(tempo-define-template "html"
-                       '("!DOCTYPE html>" n> "<html>" n>"<head>" n>
-                         "<title> " > p " </title>" p n>
-                         "</head>" n>
-                         "<body>" n>  p
-                         "\n</body>" > n "</html>" n>)
-                       "html"
-                       "insert a html template"
-                       'html-tempo-tags)
+									   (tempo-define-template "html"
+															  '("!DOCTYPE html>" n> "<html>" n>"<head>" n>
+																"<title> " > p " </title>" p n>
+																"</head>" n>
+																"<body>" n>  p
+																"\n</body>" > n "</html>" n>)
+															  "html"
+															  "insert a html template"
+															  'html-tempo-tags)
 
-(add-hook 'html-mode-hook (lambda () (progn (set-tempo)
-                                            (tempo-use-tag-list 'html-tempo-tags)
-                                            (setq tempo-match-finder "\\(?:<!?\\)\\([^\b]+\\)\\=")
-                                            )))
-
-(add-hook 'mhtml-mode-hook (lambda () (progn (set-tempo)
-                                             (tempo-use-tag-list 'html-tempo-tags)
-                                             (setq tempo-match-finder "\\(?:<!?\\)\\([^\b]+\\)\\=")
-                                             )))
+									   (set-tempo)
+                                       (tempo-use-tag-list 'html-tempo-tags)
+                                       (setq tempo-match-finder "\\(?:<!?\\)\\([^\b]+\\)\\=")
+                                       )))
 
 #+end_src
 
