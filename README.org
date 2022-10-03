@@ -486,7 +486,6 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+begin_src emacs-lisp
 
-;;; html tempo templates
 (add-hook 'html-mode-hook (lambda () (progn 
                                        (defvar html-tempo-tags nil)
 
@@ -542,7 +541,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                                               'html-tempo-tags)
 
                                        (tempo-define-template "abbr"
-                                                              '("abbr title=\"" > p "\">" p "</abbr>">)
+                                                              '("abbr title=\"" > p "\">" p "</abbr>" >)
                                                               "abbr"
                                                               "insert html abbr tag"
                                                               'html-tempo-tags)
@@ -550,9 +549,9 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                        (tempo-define-template "html"
                                                               '("!DOCTYPE html>" n> "<html>" n>"<head>" n>
                                                                 "<title> " > p " </title>" p n>
-                                                                "</head>" n>
-                                                                "<body>" n>  p
-                                                                "\n</body>" > n "</html>" n>)
+                                                                "</head>" > n>
+                                                                "<body>" > n>  p
+                                                                "\n</body>" > n "</html>" > n>)
                                                               "html"
                                                               "insert a html template"
                                                               'html-tempo-tags)
