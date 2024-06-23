@@ -687,6 +687,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 #+begin_src emacs-lisp
 
+;; Define macros for single-line and multi-line HTML tags
 (defmacro html-expand-snippet-single-line (var)
   (list 'quote (list var (concat "<" var ">  </" var ">") (list (+ 4 (length var)) (+ 10 (length var))))))
 
