@@ -696,8 +696,8 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 ;; Manually define specific expansions
 (defconst specific-html-expand-list
-  '(("img" "<img src=\"\" alt=\"\">" (10 17))
-    ("abbr" "<abbr title=\"\"> </abbr>" (15 18))
+  '(("img" "<img src=\"\" alt=\"\">" (11 18 20))
+    ("abbr" "<abbr title=\"\"> </abbr>" (14 16 24))
     ("html" "<!DOCTYPE html>\n<html>\n<head>\n<title> </title>\n</head>\n<body>\n\n</body>\n</html>" (39 63 88))))
 
 ;; Define the automatically generated expansion list using the macros
