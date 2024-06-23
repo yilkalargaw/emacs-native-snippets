@@ -693,11 +693,18 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 (defmacro html-expand-snippet-multi-line (var)
   (list 'quote (list var (concat "<" var ">\n\n</" var ">") (list (+ 4 (length var)) (+ 10 (length var))))))
 
-(defconst html-expand-list
+
+;; Manually define specific expansions
+(defconst specific-html-expand-list
+  '(("img" "<img src=\"\" alt=\"\">" (10 17))
+    ("abbr" "<abbr title=\"\"> </abbr>" (15 18))
+    ("html" "<!DOCTYPE html>\n<html>\n<head>\n<title> </title>\n</head>\n<body>\n\n</body>\n</html>" (39 63 88))))
+
+;; Define the automatically generated expansion list using the macros
+(defconst auto-html-expand-list
   (seq-concatenate 'list
                    (seq-map (lambda (x)
-                              "expand macro"
-                              (eval (list 'html-expand-snippet-single-line x)))
+                              (eval `(html-expand-snippet-single-line ,x)))
                             '("a" "b" "bdi" "bdo"
                               "button" "caption" "cite" "data"
                               "del" "dfn" "em" "figcaption"
@@ -709,10 +716,8 @@ Expand is a package that extends the functionality of abbrev to enable code temp
                               "s" "samp" "small" "span"
                               "strong" "sub" "summary" "sup"
                               "th" "td" "title" "time"))
-
                    (seq-map (lambda (x)
-                              "expand macro"
-                              (eval (list 'html-expand-snippet-multi-line x)))
+                              (eval `(html-expand-snippet-multi-line ,x)))
                             '("address" "article" "aside" "audio"
                               "body" "blockquote" "colgroup" "canvas"
                               "code" "datalist" "dl" "details"
@@ -724,6 +729,10 @@ Expand is a package that extends the functionality of abbrev to enable code temp
                               "table" "thead" "tbody" "tfoot"
                               "tr" "template" "textarea" "ul"
                               "video"))))
+
+;; Combine specific and automatic expansions
+(defconst html-expand-list
+  (append specific-html-expand-list auto-html-expand-list))
 
 (add-hook 'html-mode-hook
           (lambda ()
