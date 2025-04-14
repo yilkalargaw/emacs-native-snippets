@@ -3,15 +3,46 @@
 
 While perusing through Emacs' built in features through "C-h p" documentation I found out there were several template and snippet tools built into emacs. Three of them to be exact tempo, skeletons and expand. I've never actually dived into many of these features. After reading about them and experimenting with them deeper I have noticed how powerful they are. Aside from lack of documentation most of them are not widely used because they lack a good collection of snippets for various modes. This repo aims to give a good documentation and a set of snippets that could easily be copied by users to help them get started on using Emacs' built in code templating and snippet tools.
 
+* good requirements
+** hippie_expand
+
+Use hippie expand to allow completion using M-/
+#+begin_src emacs-lisp
+
+;; use hippie expand to allow completion using M-/
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
+
+#+end_src
+
+** abbrev
+;; good abbrev setting if you want to use expand snippets
+
+#+begin_src emacs-lisp
+
+(setq-default abbrev-file-name (expand-file-name "abbrev_defs"  user-emacs-directory))
+(if (file-exists-p abbrev-file-name)
+    (quietly-read-abbrev-file)
+  (setq save-abbrevs 'silently))
+
+(require 'abbrev)
+
+#+end_src
+
 * tempo
 
 This file provides a simple way to define powerful templates, or
-macros, if you wish.  It is mainly intended for, but not limited to,
+macros, if you wish. It is mainly intended for, but not limited to,
 other programmers to be used for creating shortcuts for editing
-certain kind of documents. Most of what I learned about this package from the following the article on https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html by the Author(or I think it is the author)
+certain kind of documents. Most of what I learned about this package
+from the following the article on
+https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html by the
+Author(or I think it is the author)
 
-The settings in the "general settings" part are used to override "space" so that tempo completion could take place after writing a valid tag and  define a keymap for the package.
-Movement keys are set to "C-c t f", and "C-c t b" for moving forward and moving backward respectively  inside the stops in the snippet.
+The settings in the "general settings" part are used to override
+"space" so that tempo completion could take place after writing a
+valid tag and define a keymap for the package. Movement keys are set
+to "C-c t f", and "C-c t b" for moving forward and moving backward
+respectively inside the stops in the snippet.
 
 ** general settings needed for snippets
 
@@ -28,16 +59,25 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
       nil
     (insert " ")))
 
+(defun try-expand-tempo-tag (old)
+  "Try to expand a Tempo tag."
+  (unless old
+    (tempo-complete-tag)))
+
 (defun set-tempo ()
   "Set up emacs-lisp mode to use tempo.el"
   (define-prefix-command 'tempo-map)
   (local-set-key (kbd "C-c t") 'tempo-map)
   (define-key tempo-map (kbd "c") 'tempo-complete-tag)  ;; define keys for complete-tag and movement through stops
-  (define-key tempo-map (kbd "f") 'tempo-forward-mark)
-  (define-key tempo-map (kbd "b") 'tempo-backward-mark)
+  (define-key tempo-map (kbd "n") 'tempo-forward-mark)
+  (define-key tempo-map (kbd "p") 'tempo-backward-mark)
 
-  (local-set-key " " 'tempo-space))
+  ;; (local-set-key " " 'tempo-space)
+  )
 
+(setq hippie-expand-try-functions-list
+      (cons 'try-expand-tempo-tag
+            (remove 'try-expand-tempo-tag hippie-expand-try-functions-list)))
 
 #+end_src
 
@@ -206,7 +246,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 ;;;C++-Mode Templates
 
 (add-hook 'c++-mode-hook
-		  (lambda () (progn 
+          (lambda () (progn 
                        (tempo-define-template "c++-class"
                                               '("class " (p "classname: " class) p n "{" n "public:" n>
 
@@ -312,26 +352,20 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 ;;; org-mode templates
                                       (defvar org-tempo-tags nil)
 
-                                      (tempo-define-template "src_block"
-                                                             '("#+begin_src "> p n> p n> "#+end_src")
-                                                             "src"
-                                                             "Insert a source block"
-                                                             'org-tempo-tags)
-
                                       (tempo-define-template "title"
-                                                             '("+TITLE: "> p)
+                                                             '("TITLE: "> p)
                                                              "ti"
                                                              "Insert a document title"
                                                              'org-tempo-tags)
 
                                       (tempo-define-template "author"
-                                                             '("+AUTHOR: "> p)
+                                                             '("AUTHOR: "> p)
                                                              "au"
                                                              "Insert a author name"
                                                              'org-tempo-tags)
 
                                       (tempo-define-template "src_block"
-                                                             '("+begin_src "> p n> p n> "#+end_src" n>)
+                                                             '("begin_src "> p n> p n> "#+end_src" n>)
                                                              "src"
                                                              "Insert a defun expression"
                                                              'org-tempo-tags)
@@ -340,7 +374,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                       (set-tempo)
                                       (defvar html-tempo-tags nil)
                                       (tempo-use-tag-list 'org-tempo-tags)
-                                      (setq tempo-match-finder "\\#\\([^\b]+\\)\\="))))
+                                      (setq tempo-match-finder "\\#\\+\\([^\b]+\\)\\="))))
 
 #+end_src
 
@@ -396,7 +430,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                                               'ruby-tempo-tags)
 
                                        (tempo-define-template "ruby-ifelse"
-                                                              '("if " > p n> "else" n> p n> "end" >)
+                                                              '("if " > p n >"else " n> p n> "end" >)
                                                               "ifel"
                                                               "Insert an if else clause"
                                                               'ruby-tempo-tags)
@@ -486,6 +520,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+begin_src emacs-lisp
 
+;;; html tempo templates
 (add-hook 'html-mode-hook (lambda () (progn 
                                        (defvar html-tempo-tags nil)
 
@@ -541,7 +576,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                                               'html-tempo-tags)
 
                                        (tempo-define-template "abbr"
-                                                              '("abbr title=\"" > p "\">" p "</abbr>" >)
+                                                              '("abbr title=\"" > p "\">" p "</abbr>">)
                                                               "abbr"
                                                               "insert html abbr tag"
                                                               'html-tempo-tags)
@@ -549,9 +584,9 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                        (tempo-define-template "html"
                                                               '("!DOCTYPE html>" n> "<html>" n>"<head>" n>
                                                                 "<title> " > p " </title>" p n>
-                                                                "</head>" > n>
-                                                                "<body>" > n>  p
-                                                                "\n</body>" > n "</html>" > n>)
+                                                                "</head>" n>
+                                                                "<body>" n>  p
+                                                                "\n</body>" > n "</html>" n>)
                                                               "html"
                                                               "insert a html template"
                                                               'html-tempo-tags)
@@ -563,10 +598,13 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+end_src
 
-
 * expand
 
-Expand is a package that extends the functionality of abbrev to enable code templating functionality. It uses a similar definition to abbrevs with an added list to indicate stops inside the template. It has default keys "C-x a n" and "C-x a p" for moving forward and backward within stops
+Expand is a package that extends the functionality of abbrev to enable
+code templating functionality. It uses a similar definition to abbrevs
+with an added list to indicate stops inside the template. It has
+default keys "C-x a n" and "C-x a p" for moving forward and backward
+within stops
 
 ** general settings
 
@@ -574,6 +612,15 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 (add-hook 'expand-expand-hook 'indent-according-to-mode)
 (add-hook 'expand-jump-hook 'indent-according-to-mode)
+
+(defun try-expand-abbrev (old)
+  "Try to expand abbrev if one exists at point."
+  (unless old
+    (expand-abbrev)))
+
+(setq hippie-expand-try-functions-list
+      (cons 'try-expand-abbrev
+            (remove 'try-expand-abbrev hippie-expand-try-functions-list)))
 
 #+end_src
 
@@ -670,9 +717,9 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (defconst org-expand-list
-  '(("orgau" "#+AUTHOR: " 11)
-    ("orgti" "#+TITLE: " 10)
-    ("orgsrc" "#+begin_src \n \n #+end_src" (13 15 28))
+  '(("oau" "#+AUTHOR: " 11)
+    ("oti" "#+TITLE: " 10)
+    ("osrc" "#+begin_src \n \n #+end_src" (13 15 28))
     )
   "Expansions for org mode")
 
@@ -746,7 +793,6 @@ Expand is a package that extends the functionality of abbrev to enable code temp
             (abbrev-mode 1)))
 
 #+end_src
-
 
 * Skeleton
 
