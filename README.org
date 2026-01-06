@@ -103,10 +103,15 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                       ;;; Preprocessor Templates (appended to c-tempo-tags)
 
                        (tempo-define-template "c-include"
-                                              '("#include <" r ".h>" > n
-                                                )
-                                              "#include"
-                                              "Insert a #include <> statement"
+                                              '("#include <" r ".h>" > n)
+                                              "inc"
+                                              "Insert an #include <> statement"
+                                              'c-tempo-tags)
+
+                       (tempo-define-template "c-include-quote"
+                                              '("#include \"" r ".h\"" > n)
+                                              "incs"
+                                              "Insert an #include \"\" statement"
                                               'c-tempo-tags)
 
                        (tempo-define-template "c-ifdef"
@@ -114,7 +119,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                                 "#else /* !(" (s clause) ") */" n> p n
                                                 "#endif /* " (s clause)" */" n>
                                                 )
-                                              "#ifdef"
+                                              "ifdef"
                                               "Insert a #ifdef #else #endif statement"
                                               'c-tempo-tags)
 
@@ -123,7 +128,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                                 "#define " (s clause) n> p n
                                                 "#endif /* " (s clause)" */" n>
                                                 )
-                                              "#ifndef"
+                                              "ifndef"
                                               "Insert a #ifndef #define #endif statement"
                                               'c-tempo-tags)
 
